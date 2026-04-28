@@ -39,7 +39,7 @@ nav {
 
 .logo {
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: 850;
     color: var(--primary);
     text-decoration: none;
     letter-spacing: -1px;
@@ -125,8 +125,13 @@ h1 {
     font-weight: 600;
 }
 
-.positive { color: var(--success); }
-.negative { color: var(--danger); }
+.positive {
+    color: var(--success);
+}
+
+.negative {
+    color: var(--danger);
+}
 
 footer {
     padding: 2rem;

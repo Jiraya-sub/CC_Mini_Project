@@ -14,10 +14,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Stop and Remove Old Container
-        # The '|| true' ensures the workflow doesn't fail if no container exists
+        # Using PowerShell syntax to ignore errors if container doesn't exist
         run: |
-          docker stop stocks-app || true
-          docker rm stocks-app || true
+          docker stop stocks-app 2>$null
+          docker rm stocks-app 2>$null
+          echo "Old containers cleaned up."
+        continue-on-error: true
 
       - name: Build New Docker Image
         run: docker build -t stocks-dashboard:latest .
