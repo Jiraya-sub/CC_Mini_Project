@@ -1,0 +1,30 @@
+name: Stocks Dashboard CI/CD (Local GitOps)
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy-locally:
+    # This tells GitHub to run the job on YOUR machine
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Stop and Remove Old Container
+        # The '|| true' ensures the workflow doesn't fail if no container exists
+        run: |
+          docker stop stocks-app || true
+          docker rm stocks-app || true
+
+      - name: Build New Docker Image
+        run: docker build -t stocks-dashboard:latest .
+
+      - name: Run New Container
+        # Runs the new container on port 5500 with the name 'stocks-app'
+        run: docker run -d --name stocks-app -p 5500:5500 stocks-dashboard:latest
+
+      - name: Pipeline Summary
+        run: echo "🚀 Auto-deployment complete on local system!"
